@@ -1,0 +1,889 @@
+<sdf version='1.7'>
+  <world name='default'>
+    <light name='sun' type='directional'>
+      <cast_shadows>1</cast_shadows>
+      <pose>0 0 10 0 -0 0</pose>
+      <diffuse>0.8 0.8 0.8 1</diffuse>
+      <specular>0.2 0.2 0.2 1</specular>
+      <attenuation>
+        <range>1000</range>
+        <constant>0.9</constant>
+        <linear>0.01</linear>
+        <quadratic>0.001</quadratic>
+      </attenuation>
+      <direction>-0.5 0.1 -0.9</direction>
+      <spot>
+        <inner_angle>0</inner_angle>
+        <outer_angle>0</outer_angle>
+        <falloff>0</falloff>
+      </spot>
+    </light>
+    <model name='ground_plane'>
+      <static>1</static>
+      <link name='link'>
+        <collision name='collision'>
+          <geometry>
+            <plane>
+              <normal>0 0 1</normal>
+              <size>100 100</size>
+            </plane>
+          </geometry>
+          <surface>
+            <contact>
+              <collide_bitmask>65535</collide_bitmask>
+              <ode/>
+            </contact>
+            <friction>
+              <ode>
+                <mu>100</mu>
+                <mu2>50</mu2>
+              </ode>
+              <torsional>
+                <ode/>
+              </torsional>
+            </friction>
+            <bounce/>
+          </surface>
+          <max_contacts>10</max_contacts>
+        </collision>
+        <visual name='visual'>
+          <cast_shadows>0</cast_shadows>
+          <geometry>
+            <plane>
+              <normal>0 0 1</normal>
+              <size>100 100</size>
+            </plane>
+          </geometry>
+          <material>
+            <script>
+              <uri>file://media/materials/scripts/gazebo.material</uri>
+              <name>Gazebo/Grey</name>
+            </script>
+          </material>
+        </visual>
+        <self_collide>0</self_collide>
+        <enable_wind>0</enable_wind>
+        <kinematic>0</kinematic>
+      </link>
+    </model>
+    <gravity>0 0 -9.8</gravity>
+    <magnetic_field>6e-06 2.3e-05 -4.2e-05</magnetic_field>
+    <atmosphere type='adiabatic'/>
+    <physics type='ode'>
+      <max_step_size>0.001</max_step_size>
+      <real_time_factor>1</real_time_factor>
+      <real_time_update_rate>1000</real_time_update_rate>
+    </physics>
+    <scene>
+      <ambient>0.4 0.4 0.4 1</ambient>
+      <background>0.7 0.7 0.7 1</background>
+      <shadows>1</shadows>
+    </scene>
+    <wind/>
+    <spherical_coordinates>
+      <surface_model>EARTH_WGS84</surface_model>
+      <latitude_deg>0</latitude_deg>
+      <longitude_deg>0</longitude_deg>
+      <elevation>0</elevation>
+      <heading_deg>0</heading_deg>
+    </spherical_coordinates>
+    <model name='table_marble'>
+      <static>1</static>
+      <pose>-0.003792 0.272678 0.648 0 -0 0</pose>
+      <link name='link'>
+        <collision name='collision'>
+          <geometry>
+            <mesh>
+              <uri>model:///table_marble/meshes/table_lightmap.dae</uri>
+              <scale>0.25 0.25 0.25</scale>
+            </mesh>
+          </geometry>
+          <max_contacts>10</max_contacts>
+          <surface>
+            <contact>
+              <ode/>
+            </contact>
+            <bounce/>
+            <friction>
+              <torsional>
+                <ode/>
+              </torsional>
+              <ode/>
+            </friction>
+          </surface>
+        </collision>
+        <visual name='visual'>
+          <geometry>
+            <mesh>
+              <uri>model://table_marble/meshes/table_lightmap.dae</uri>
+              <scale>0.25 0.25 0.25</scale>
+            </mesh>
+          </geometry>
+          <material>
+            <script>
+              <uri>model://table_marble/materials/scripts</uri>
+              <uri>model://table_marble/materials/textures</uri>
+              <name>Table/Marble_Lightmap</name>
+            </script>
+            <lighting>0</lighting>
+          </material>
+        </visual>
+        <self_collide>0</self_collide>
+        <enable_wind>0</enable_wind>
+        <kinematic>0</kinematic>
+      </link>
+    </model>
+    <model name='kinect_ros'>
+      <static>1</static>
+      <pose>0.022376 1.82902 0.036 0 -0 0</pose>
+      <link name='link'>
+        <inertial>
+          <mass>0.1</mass>
+        </inertial>
+        <collision name='collision'>
+          <geometry>
+            <box>
+              <size>0.073 0.276 0.072</size>
+            </box>
+          </geometry>
+          <max_contacts>10</max_contacts>
+          <surface>
+            <contact>
+              <ode/>
+            </contact>
+            <bounce/>
+            <friction>
+              <torsional>
+                <ode/>
+              </torsional>
+              <ode/>
+            </friction>
+          </surface>
+        </collision>
+        <visual name='visual'>
+          <geometry>
+            <mesh>
+              <uri>package://kinect_ros/meshes/kinect.dae</uri>
+            </mesh>
+          </geometry>
+        </visual>
+        <sensor name='camera' type='depth'>
+          <update_rate>20</update_rate>
+          <camera>
+            <horizontal_fov>1.0472</horizontal_fov>
+            <image>
+              <width>640</width>
+              <height>480</height>
+              <format>R8G8B8</format>
+            </image>
+            <clip>
+              <near>0.05</near>
+              <far>5</far>
+            </clip>
+          </camera>
+          <plugin name='camera_plugin' filename='libgazebo_ros_openni_kinect.so'>
+            <baseline>0.2</baseline>
+            <alwaysOn>1</alwaysOn>
+            <updateRate>0.0</updateRate>
+            <cameraName>camera_ir</cameraName>
+            <imageTopicName>/camera/color/image_raw</imageTopicName>
+            <cameraInfoTopicName>/camera/color/camera_info</cameraInfoTopicName>
+            <depthImageTopicName>/camera/depth/image_raw</depthImageTopicName>
+            <depthImageCameraInfoTopicName>/camera/depth/camera_info</depthImageCameraInfoTopicName>
+            <pointCloudTopicName>/camera/depth/points</pointCloudTopicName>
+            <frameName>camera_link</frameName>
+            <pointCloudCutoff>0.5</pointCloudCutoff>
+            <pointCloudCutoffMax>3.0</pointCloudCutoffMax>
+            <distortionK1>0</distortionK1>
+            <distortionK2>0</distortionK2>
+            <distortionK3>0</distortionK3>
+            <distortionT1>0</distortionT1>
+            <distortionT2>0</distortionT2>
+            <CxPrime>0</CxPrime>
+            <Cx>0</Cx>
+            <Cy>0</Cy>
+            <focalLength>0</focalLength>
+            <hackBaseline>0</hackBaseline>
+          </plugin>
+        </sensor>
+        <self_collide>0</self_collide>
+        <enable_wind>0</enable_wind>
+        <kinematic>0</kinematic>
+      </link>
+    </model>
+
+
+    <model name='up_camera'>
+      <static>1</static>
+      <pose>-0.6 0 2.564759 0 1.5707 0</pose>
+      <link name='link'>
+        <inertial>
+          <mass>0.1</mass>
+        </inertial>
+        <collision name='collision'>
+          <geometry>
+            <box>
+              <size>0.073 0.276 0.072</size>
+            </box>
+          </geometry>
+          <max_contacts>10</max_contacts>
+          <surface>
+            <contact>
+              <ode/>
+            </contact>
+            <bounce/>
+            <friction>
+              <torsional>
+                <ode/>
+              </torsional>
+              <ode/>
+            </friction>
+          </surface>
+        </collision>
+        <visual name='visual'>
+          <geometry>
+            <mesh>
+              <uri>package://kinect_ros/meshes/kinect.dae</uri>
+            </mesh>
+          </geometry>
+        </visual>
+        <sensor name='camera' type='depth'>
+          <update_rate>20</update_rate>
+          <camera>
+            <horizontal_fov>1.0472</horizontal_fov>
+            <image>
+              <width>640</width>
+              <height>480</height>
+              <format>R8G8B8</format>
+            </image>
+            <clip>
+              <near>0.05</near>
+              <far>5</far>
+            </clip>
+          </camera>
+          <plugin name='camera_plugin' filename='libgazebo_ros_openni_kinect.so'>
+            <baseline>0.2</baseline>
+            <alwaysOn>1</alwaysOn>
+            <updateRate>0.0</updateRate>
+            <cameraName>camera_up</cameraName>
+            <imageTopicName>/camera_up/color/image_raw</imageTopicName>
+            <cameraInfoTopicName>/camera_up/color/camera_info</cameraInfoTopicName>
+            <depthImageTopicName>/camera_up/depth/image_raw</depthImageTopicName>
+            <depthImageCameraInfoTopicName>/camera_up/depth/camera_info</depthImageCameraInfoTopicName>
+            <pointCloudTopicName>/camera_up/depth/points</pointCloudTopicName>
+            <frameName>camera_up_link</frameName>
+            <pointCloudCutoff>0.5</pointCloudCutoff>
+            <pointCloudCutoffMax>3.0</pointCloudCutoffMax>
+            <distortionK1>0</distortionK1>
+            <distortionK2>0</distortionK2>
+            <distortionK3>0</distortionK3>
+            <distortionT1>0</distortionT1>
+            <distortionT2>0</distortionT2>
+            <CxPrime>0</CxPrime>
+            <Cx>0</Cx>
+            <Cy>0</Cy>
+            <focalLength>0</focalLength>
+            <hackBaseline>0</hackBaseline>
+          </plugin>
+        </sensor>
+        <self_collide>0</self_collide>
+        <enable_wind>0</enable_wind>
+        <kinematic>0</kinematic>
+      </link>
+    </model>
+
+
+    <state world_name='default'>
+      <sim_time>8786 2000000</sim_time>
+      <real_time>327 295323900</real_time>
+      <wall_time>1642084162 449665800</wall_time>
+      <iterations>297975</iterations>
+      <model name='ground_plane'>
+        <pose>0 10 0 0 -0 0</pose>
+        <scale>1 1 1</scale>
+        <link name='link'>
+          <pose>0 10 0 0 -0 0</pose>
+          <velocity>0 0 0 0 -0 0</velocity>
+          <acceleration>0 0 0 0 -0 0</acceleration>
+          <wrench>0 0 0 0 -0 0</wrench>
+        </link>
+      </model>
+      <model name='kinect_ros'>
+        <pose>-1.3 0 1.5 2e-06 0.800001 -2e-06</pose>
+        <scale>1 1 1</scale>
+        <link name='link'>
+          <pose>-1.3 0 1.5 2e-06 0.800001 -2e-06</pose>
+          <velocity>0 0 0 0 -0 0</velocity>
+          <acceleration>0 0 0 0 -0 0</acceleration>
+          <wrench>0 0 0 0 -0 0</wrench>
+        </link>
+      </model>
+      <model name='provee'>
+        <static>1</static>
+        <pose>-0.6 0 0.965015 -8e-06 5e-06 0</pose>
+        <scale>1.83163 0.714467 1</scale>
+        <link name='link'>
+          <pose>-0.6 0 0.965015 -8e-06 5e-06 0</pose>
+          <velocity>0 0 0 0 -0 0</velocity>
+          <acceleration>0 0 -9.8 0 -0 0</acceleration>
+          <wrench>0 0 -9.8 0 -0 0</wrench>
+        </link>
+      </model>
+
+
+      <model name='silhouettes'>
+        <pose>0 0 0 0 -0 0</pose>
+        <scale>1 1 1</scale>
+        <link name='112-silhouette'>
+          <pose>0.655 -0.29 0.667572 0 -0 0</pose>
+          <velocity>0 0 -0 0 -0 0</velocity>
+          <acceleration>0 0 0 0 -0 0</acceleration>
+          <wrench>0 0 0 0 -0 0</wrench>
+        </link>
+        <link name='121-silhouette'>
+          <pose>0.567 -0.15 0.70912 0 -0 0</pose>
+          <velocity>0 0 -0 0 -0 0</velocity>
+          <acceleration>0 0 0 0 -0 0</acceleration>
+          <wrench>0 0 0 0 -0 0</wrench>
+        </link>
+        <link name='122-silhouette'>
+          <pose>0.387 0 0.679568 0 -0 0</pose>
+          <velocity>0 0 -0 0 -0 0</velocity>
+          <acceleration>0 0 0 0 -0 0</acceleration>
+          <wrench>0 0 0 0 -0 0</wrench>
+        </link>
+        <link name='122doublearch-silhouette'>
+          <pose>0.529 0.426 0.682539 0 -0 0</pose>
+          <velocity>0 0 -0 0 -0 0</velocity>
+          <acceleration>0 0 0 0 -0 0</acceleration>
+          <wrench>0 0 0 0 -0 0</wrench>
+        </link>
+        <link name='122slope-silhouette'>
+          <pose>0.616 0.75 0.710843 0 -0 0</pose>
+          <velocity>0 0 -0 0 -0 0</velocity>
+          <acceleration>0 0 0 0 -0 0</acceleration>
+          <wrench>0 0 0 0 -0 0</wrench>
+        </link>
+        <link name='132-silhouette'>
+          <pose>0.78 -0.247 0.682539 0 -0 0</pose>
+          <velocity>0 0 -0 0 -0 0</velocity>
+          <acceleration>0 0 0 0 -0 0</acceleration>
+          <wrench>0 0 0 0 -0 0</wrench>
+        </link>
+        <link name='132arch-silhouette'>
+          <pose>0.765 0.014 0.717746 0 -0 0</pose>
+          <velocity>0 0 -0 0 -0 0</velocity>
+          <acceleration>0 0 0 0 -0 0</acceleration>
+          <wrench>0 0 0 0 -0 0</wrench>
+        </link>
+        <link name='141-silhouette'>
+          <pose>0.727 0.175 0.711201 0 -0 0</pose>
+          <velocity>0 0 -0 0 -0 0</velocity>
+          <acceleration>0 0 0 0 -0 0</acceleration>
+          <wrench>0 0 0 0 -0 0</wrench>
+        </link>
+        <link name='142-silhouette'>
+          <pose>0.728 0.46 0.717085 0 -0 0</pose>
+          <velocity>0 0 -0 0 -0 0</velocity>
+          <acceleration>0 0 0 0 -0 0</acceleration>
+          <wrench>0 0 0 0 -0 0</wrench>
+        </link>
+        <link name='222-silhouette'>
+          <pose>0.87 0.08 0.715286 0 -0 0</pose>
+          <velocity>0 0 -0 0 -0 0</velocity>
+          <acceleration>0 0 0 0 -0 0</acceleration>
+          <wrench>0 0 0 0 -0 0</wrench>
+        </link>
+        <link name='222slope-silhouette'>
+          <pose>0.887 0.45 0.714301 0 -0 0</pose>
+          <velocity>0 0 -0 0 -0 0</velocity>
+          <acceleration>0 0 0 0 -0 0</acceleration>
+          <wrench>0 0 0 0 -0 0</wrench>
+        </link>
+      </model>
+      <model name='table_marble'>
+        <pose>0.00081 0.142609 0.648 0 -0 0</pose>
+        <scale>1 1 1</scale>
+        <link name='link'>
+          <pose>0.00081 0.142609 0.648 0 -0 0</pose>
+          <velocity>0 0 0 0 -0 0</velocity>
+          <acceleration>0 0 0 0 -0 0</acceleration>
+          <wrench>0 0 0 0 -0 0</wrench>
+        </link>
+      </model>
+      <light name='sun'>
+        <pose>0 0 10 0 -0 0</pose>
+      </light>
+    </state>
+    <gui fullscreen='0'>
+      <camera name='user_camera'>
+        <pose>-1.45198 1.40567 2.83705 0 0.845796 -0.895</pose>
+        <view_controller>orbit</view_controller>
+        <projection_type>perspective</projection_type>
+      </camera>
+    </gui>
+    <model name='silhouettes'>
+      <joint name='world_to_112' type='fixed'>
+        <pose relative_to='__model__'>0.655 -0.29 0.667572 0 -0 0</pose>
+        <parent>world</parent>
+        <child>112-silhouette</child>
+      </joint>
+      <link name='112-silhouette'>
+        <pose relative_to='world_to_112'>0 0 0 0 -0 0</pose>
+        <inertial>
+          <pose>0 0 0 0 -0 0</pose>
+          <mass>0.005</mass>
+          <inertia>
+            <ixx>0.0004</ixx>
+            <ixy>0.0001</ixy>
+            <ixz>0</ixz>
+            <iyy>0.0006</iyy>
+            <iyz>0</iyz>
+            <izz>0.0007</izz>
+          </inertia>
+        </inertial>
+        <visual name='112-silhouette_visual'>
+          <pose>0 0 0 0 -0 0</pose>
+          <geometry>
+            <mesh>
+              <scale>1 1 1</scale>
+              <uri>/mnt/c/Users/davip/terzo_anno/Robotics/workspaces/PROGETTO_ROBOTICA/ur_grippertest/src/support/legos/legos_silhouettes/112-silhouette.dae</uri>
+            </mesh>
+          </geometry>
+        </visual>
+        <self_collide>0</self_collide>
+        <enable_wind>0</enable_wind>
+        <kinematic>0</kinematic>
+      </link>
+      <joint name='world_to_121' type='fixed'>
+        <pose relative_to='__model__'>0.567 -0.15 0.70912 0 -0 0</pose>
+        <parent>world</parent>
+        <child>121-silhouette</child>
+      </joint>
+      <link name='121-silhouette'>
+        <pose relative_to='world_to_121'>0 0 0 0 -0 0</pose>
+        <inertial>
+          <pose>0 0 0 0 -0 0</pose>
+          <mass>0.005</mass>
+          <inertia>
+            <ixx>0.0004</ixx>
+            <ixy>0.0001</ixy>
+            <ixz>0</ixz>
+            <iyy>0.0006</iyy>
+            <iyz>0</iyz>
+            <izz>0.0007</izz>
+          </inertia>
+        </inertial>
+        <visual name='121-silhouette_visual'>
+          <pose>0 0 0 0 -0 0</pose>
+          <geometry>
+            <mesh>
+              <scale>1 1 1</scale>
+              <uri>/mnt/c/Users/davip/terzo_anno/Robotics/workspaces/PROGETTO_ROBOTICA/ur_grippertest/src/support/legos/legos_silhouettes/121-silhouette.dae</uri>
+            </mesh>
+          </geometry>
+        </visual>
+        <self_collide>0</self_collide>
+        <enable_wind>0</enable_wind>
+        <kinematic>0</kinematic>
+      </link>
+      <joint name='world_to_122' type='fixed'>
+        <pose relative_to='__model__'>0.387 0 0.679568 0 -0 0</pose>
+        <parent>world</parent>
+        <child>122-silhouette</child>
+      </joint>
+      <link name='122-silhouette'>
+        <pose relative_to='world_to_122'>0 0 0 0 -0 0</pose>
+        <inertial>
+          <pose>0 0 0 0 -0 0</pose>
+          <mass>0.005</mass>
+          <inertia>
+            <ixx>0.0004</ixx>
+            <ixy>0.0001</ixy>
+            <ixz>0</ixz>
+            <iyy>0.0006</iyy>
+            <iyz>0</iyz>
+            <izz>0.0007</izz>
+          </inertia>
+        </inertial>
+        <visual name='122-silhouette_visual'>
+          <pose>0 0 0 0 -0 0</pose>
+          <geometry>
+            <mesh>
+              <scale>1 1 1</scale>
+              <uri>/mnt/c/Users/davip/terzo_anno/Robotics/workspaces/PROGETTO_ROBOTICA/ur_grippertest/src/support/legos/legos_silhouettes/122-silhouette.dae</uri>
+            </mesh>
+          </geometry>
+        </visual>
+        <self_collide>0</self_collide>
+        <enable_wind>0</enable_wind>
+        <kinematic>0</kinematic>
+      </link>
+      <joint name='world_to_122doublearch' type='fixed'>
+        <pose relative_to='__model__'>0.529 0.426 0.682539 0 -0 0</pose>
+        <parent>world</parent>
+        <child>122doublearch-silhouette</child>
+      </joint>
+      <link name='122doublearch-silhouette'>
+        <pose relative_to='world_to_122doublearch'>0 0 0 0 -0 0</pose>
+        <inertial>
+          <pose>0 0 0 0 -0 0</pose>
+          <mass>0.005</mass>
+          <inertia>
+            <ixx>0.0004</ixx>
+            <ixy>0.0001</ixy>
+            <ixz>0</ixz>
+            <iyy>0.0006</iyy>
+            <iyz>0</iyz>
+            <izz>0.0007</izz>
+          </inertia>
+        </inertial>
+        <visual name='122doublearch-silhouette_visual'>
+          <pose>0 0 0 0 -0 0</pose>
+          <geometry>
+            <mesh>
+              <scale>1 1 1</scale>
+              <uri>/mnt/c/Users/davip/terzo_anno/Robotics/workspaces/PROGETTO_ROBOTICA/ur_grippertest/src/support/legos/legos_silhouettes/122doublearch-silhouette.dae</uri>
+            </mesh>
+          </geometry>
+        </visual>
+        <self_collide>0</self_collide>
+        <enable_wind>0</enable_wind>
+        <kinematic>0</kinematic>
+      </link>
+      <joint name='world_to_122slope' type='fixed'>
+        <pose relative_to='__model__'>0.616 0.75 0.710843 0 -0 0</pose>
+        <parent>world</parent>
+        <child>122slope-silhouette</child>
+      </joint>
+      <link name='122slope-silhouette'>
+        <pose relative_to='world_to_122slope'>0 0 0 0 -0 0</pose>
+        <inertial>
+          <pose>0 0 0 0 -0 0</pose>
+          <mass>0.005</mass>
+          <inertia>
+            <ixx>0.0004</ixx>
+            <ixy>0.0001</ixy>
+            <ixz>0</ixz>
+            <iyy>0.0006</iyy>
+            <iyz>0</iyz>
+            <izz>0.0007</izz>
+          </inertia>
+        </inertial>
+        <visual name='122slope-silhouette_visual'>
+          <pose>0 0 0 0 -0 0</pose>
+          <geometry>
+            <mesh>
+              <scale>1 1 1</scale>
+              <uri>/mnt/c/Users/davip/terzo_anno/Robotics/workspaces/PROGETTO_ROBOTICA/ur_grippertest/src/support/legos/legos_silhouettes/122slope-silhouette.dae</uri>
+            </mesh>
+          </geometry>
+        </visual>
+        <self_collide>0</self_collide>
+        <enable_wind>0</enable_wind>
+        <kinematic>0</kinematic>
+      </link>
+      <joint name='world_to_132' type='fixed'>
+        <pose relative_to='__model__'>0.78 -0.247 0.682539 0 -0 0</pose>
+        <parent>world</parent>
+        <child>132-silhouette</child>
+      </joint>
+      <link name='132-silhouette'>
+        <pose relative_to='world_to_132'>0 0 0 0 -0 0</pose>
+        <inertial>
+          <pose>0 0 0 0 -0 0</pose>
+          <mass>0.005</mass>
+          <inertia>
+            <ixx>0.0004</ixx>
+            <ixy>0.0001</ixy>
+            <ixz>0</ixz>
+            <iyy>0.0006</iyy>
+            <iyz>0</iyz>
+            <izz>0.0007</izz>
+          </inertia>
+        </inertial>
+        <visual name='132-silhouette_visual'>
+          <pose>0 0 0 0 -0 0</pose>
+          <geometry>
+            <mesh>
+              <scale>1 1 1</scale>
+              <uri>/mnt/c/Users/davip/terzo_anno/Robotics/workspaces/PROGETTO_ROBOTICA/ur_grippertest/src/support/legos/legos_silhouettes/132-silhouette.dae</uri>
+            </mesh>
+          </geometry>
+        </visual>
+        <self_collide>0</self_collide>
+        <enable_wind>0</enable_wind>
+        <kinematic>0</kinematic>
+      </link>
+      <joint name='world_to_132arch' type='fixed'>
+        <pose relative_to='__model__'>0.765 0.014 0.717746 0 -0 0</pose>
+        <parent>world</parent>
+        <child>132arch-silhouette</child>
+      </joint>
+      <link name='132arch-silhouette'>
+        <pose relative_to='world_to_132arch'>0 0 0 0 -0 0</pose>
+        <inertial>
+          <pose>0 0 0 0 -0 0</pose>
+          <mass>0.005</mass>
+          <inertia>
+            <ixx>0.0004</ixx>
+            <ixy>0.0001</ixy>
+            <ixz>0</ixz>
+            <iyy>0.0006</iyy>
+            <iyz>0</iyz>
+            <izz>0.0007</izz>
+          </inertia>
+        </inertial>
+        <visual name='132arch-silhouette_visual'>
+          <pose>0 0 0 0 -0 0</pose>
+          <geometry>
+            <mesh>
+              <scale>1 1 1</scale>
+              <uri>/mnt/c/Users/davip/terzo_anno/Robotics/workspaces/PROGETTO_ROBOTICA/ur_grippertest/src/support/legos/legos_silhouettes/132arch-silhouette.dae</uri>
+            </mesh>
+          </geometry>
+        </visual>
+        <self_collide>0</self_collide>
+        <enable_wind>0</enable_wind>
+        <kinematic>0</kinematic>
+      </link>
+      <joint name='world_to_141' type='fixed'>
+        <pose relative_to='__model__'>0.727 0.175 0.711201 0 -0 0</pose>
+        <parent>world</parent>
+        <child>141-silhouette</child>
+      </joint>
+      <link name='141-silhouette'>
+        <pose relative_to='world_to_141'>0 0 0 0 -0 0</pose>
+        <inertial>
+          <pose>0 0 0 0 -0 0</pose>
+          <mass>0.005</mass>
+          <inertia>
+            <ixx>0.0004</ixx>
+            <ixy>0.0001</ixy>
+            <ixz>0</ixz>
+            <iyy>0.0006</iyy>
+            <iyz>0</iyz>
+            <izz>0.0007</izz>
+          </inertia>
+        </inertial>
+        <visual name='141-silhouette_visual'>
+          <pose>0 0 0 0 -0 0</pose>
+          <geometry>
+            <mesh>
+              <scale>1 1 1</scale>
+              <uri>/mnt/c/Users/davip/terzo_anno/Robotics/workspaces/PROGETTO_ROBOTICA/ur_grippertest/src/support/legos/legos_silhouettes/141-silhouette.dae</uri>
+            </mesh>
+          </geometry>
+        </visual>
+        <self_collide>0</self_collide>
+        <enable_wind>0</enable_wind>
+        <kinematic>0</kinematic>
+      </link>
+      <joint name='world_to_142' type='fixed'>
+        <pose relative_to='__model__'>0.728 0.46 0.717085 0 -0 0</pose>
+        <parent>world</parent>
+        <child>142-silhouette</child>
+      </joint>
+      <link name='142-silhouette'>
+        <pose relative_to='world_to_142'>0 0 0 0 -0 0</pose>
+        <inertial>
+          <pose>0 0 0 0 -0 0</pose>
+          <mass>0.005</mass>
+          <inertia>
+            <ixx>0.0004</ixx>
+            <ixy>0.0001</ixy>
+            <ixz>0</ixz>
+            <iyy>0.0006</iyy>
+            <iyz>0</iyz>
+            <izz>0.0007</izz>
+          </inertia>
+        </inertial>
+        <visual name='142-silhouette_visual'>
+          <pose>0 0 0 0 -0 0</pose>
+          <geometry>
+            <mesh>
+              <scale>1 1 1</scale>
+              <uri>/mnt/c/Users/davip/terzo_anno/Robotics/workspaces/PROGETTO_ROBOTICA/ur_grippertest/src/support/legos/legos_silhouettes/142-silhouette.dae</uri>
+            </mesh>
+          </geometry>
+        </visual>
+        <self_collide>0</self_collide>
+        <enable_wind>0</enable_wind>
+        <kinematic>0</kinematic>
+      </link>
+      <joint name='world_to_222' type='fixed'>
+        <pose relative_to='__model__'>0.87 0.08 0.715286 0 -0 0</pose>
+        <parent>world</parent>
+        <child>222-silhouette</child>
+      </joint>
+      <link name='222-silhouette'>
+        <pose relative_to='world_to_222'>0 0 0 0 -0 0</pose>
+        <inertial>
+          <pose>0 0 0 0 -0 0</pose>
+          <mass>0.005</mass>
+          <inertia>
+            <ixx>0.0004</ixx>
+            <ixy>0.0001</ixy>
+            <ixz>0</ixz>
+            <iyy>0.0006</iyy>
+            <iyz>0</iyz>
+            <izz>0.0007</izz>
+          </inertia>
+        </inertial>
+        <visual name='222-silhouette_visual'>
+          <pose>0 0 0 0 -0 0</pose>
+          <geometry>
+            <mesh>
+              <scale>1 1 1</scale>
+              <uri>/mnt/c/Users/davip/terzo_anno/Robotics/workspaces/PROGETTO_ROBOTICA/ur_grippertest/src/support/legos/legos_silhouettes/222-silhouette.dae</uri>
+            </mesh>
+          </geometry>
+        </visual>
+        <self_collide>0</self_collide>
+        <enable_wind>0</enable_wind>
+        <kinematic>0</kinematic>
+      </link>
+      <joint name='world_to_222slope' type='fixed'>
+        <pose relative_to='__model__'>0.887 0.45 0.714301 0 -0 0</pose>
+        <parent>world</parent>
+        <child>222slope-silhouette</child>
+      </joint>
+      <link name='222slope-silhouette'>
+        <pose relative_to='world_to_222slope'>0 0 0 0 -0 0</pose>
+        <inertial>
+          <pose>0 0 0 0 -0 0</pose>
+          <mass>0.005</mass>
+          <inertia>
+            <ixx>0.0004</ixx>
+            <ixy>0.0001</ixy>
+            <ixz>0</ixz>
+            <iyy>0.0006</iyy>
+            <iyz>0</iyz>
+            <izz>0.0007</izz>
+          </inertia>
+        </inertial>
+        <visual name='222slope-silhouette_visual'>
+          <pose>0 0 0 0 -0 0</pose>
+          <geometry>
+            <mesh>
+              <scale>1 1 1</scale>
+              <uri>/mnt/c/Users/davip/terzo_anno/Robotics/workspaces/PROGETTO_ROBOTICA/ur_grippertest/src/support/legos/legos_silhouettes/222slope-silhouette.dae</uri>
+            </mesh>
+          </geometry>
+        </visual>
+        <self_collide>0</self_collide>
+        <enable_wind>0</enable_wind>
+        <kinematic>0</kinematic>
+      </link>
+      <pose>0 0 0 0 -0 0</pose>
+    </model>
+    <model name='provee'>
+      <link name='link'>
+        <inertial>
+          <mass>0.01</mass>
+          <inertia>
+            <ixx>0.166667</ixx>
+            <ixy>0</ixy>
+            <ixz>0</ixz>
+            <iyy>0.166667</iyy>
+            <iyz>0</iyz>
+            <izz>0.166667</izz>
+          </inertia>
+          <pose>0 0 0 0 -0 0</pose>
+        </inertial>
+        <self_collide>0</self_collide>
+        <enable_wind>0</enable_wind>
+        <kinematic>0</kinematic>
+        <pose>0 0 0 0 -0 0</pose>
+        <gravity>1</gravity>
+        <visual name='visual'>
+          <geometry>
+            <box>
+              <size>0.456954 1.18993 0.00052</size>
+            </box>
+          </geometry>
+          <material>
+            <script>
+              <name>Gazebo/Grey</name>
+              <uri>file://media/materials/scripts/gazebo.material</uri>
+            </script>
+            <shader type='pixel'>
+              <normal_map>__default__</normal_map>
+            </shader>
+            <diffuse>0 0 0.2 0</diffuse>
+            <ambient>0 0 0 1</ambient>
+            <specular>0.01 0 0 1</specular>
+            <emissive>0 0 0 1</emissive>
+          </material>
+          <pose>0 0 0 0 -0 0</pose>
+          <transparency>0</transparency>
+          <cast_shadows>1</cast_shadows>
+        </visual>
+        <collision name='collision'>
+          <laser_retro>0</laser_retro>
+          <max_contacts>10</max_contacts>
+          <pose>0 0 0 0 -0 0</pose>
+          <geometry>
+            <box>
+              <size>0.456954 1.18993 0.00052</size>
+            </box>
+          </geometry>
+          <surface>
+            <friction>
+              <ode>
+                <mu>1</mu>
+                <mu2>1</mu2>
+                <fdir1>0 0 0</fdir1>
+                <slip1>0</slip1>
+                <slip2>0</slip2>
+              </ode>
+              <torsional>
+                <coefficient>1</coefficient>
+                <patch_radius>0</patch_radius>
+                <surface_radius>0</surface_radius>
+                <use_patch_radius>1</use_patch_radius>
+                <ode>
+                  <slip>0</slip>
+                </ode>
+              </torsional>
+            </friction>
+            <bounce>
+              <restitution_coefficient>0</restitution_coefficient>
+              <threshold>1e+06</threshold>
+            </bounce>
+            <contact>
+              <collide_without_contact>0</collide_without_contact>
+              <collide_without_contact_bitmask>1</collide_without_contact_bitmask>
+              <collide_bitmask>1</collide_bitmask>
+              <ode>
+                <soft_cfm>0</soft_cfm>
+                <soft_erp>0.2</soft_erp>
+                <kp>1e+13</kp>
+                <kd>1</kd>
+                <max_vel>0.01</max_vel>
+                <min_depth>0</min_depth>
+              </ode>
+              <bullet>
+                <split_impulse>1</split_impulse>
+                <split_impulse_penetration_threshold>-0.01</split_impulse_penetration_threshold>
+                <soft_cfm>0</soft_cfm>
+                <soft_erp>0.2</soft_erp>
+                <kp>1e+13</kp>
+                <kd>1</kd>
+              </bullet>
+            </contact>
+          </surface>
+        </collision>
+      </link>
+      <static>1</static>
+      <allow_auto_disable>1</allow_auto_disable>
+      <pose>-0.611758 -0.012289 0.965014 4e-06 -0 0</pose>
+    </model>
+
+    <joint name='world_to_mat' type='fixed'>
+      <parent>world</parent>
+      <child>provee</child>
+    </joint>
+
+  </world>
+</sdf>

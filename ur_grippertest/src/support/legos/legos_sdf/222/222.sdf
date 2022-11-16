@@ -1,0 +1,35 @@
+<?xml version="1.0" ?>
+<sdf version="1.7">
+  <model name="222">
+    <static>false</static>
+    <link name="link">
+      <collision name="collision">
+        <geometry>
+          <mesh>
+            <uri>/mnt/c/Users/davip/terzo_anno/Robotics/workspaces/PROGETTO_ROBOTICA/ur_grippertest/src/support/legos/legos_description/222.stl</uri>
+          </mesh>
+        </geometry>
+      </collision>
+      <inertial>
+        <mass>0.01</mass>
+      </inertial>
+      <inertia>
+          <ixx>0.00083</ixx>     
+          <ixy>0.0</ixy>         
+          <ixz>0.0</ixz>        
+          <iyy>0.00083</iyy>      
+          <iyz>0.0</iyz>        
+          <izz>0.00083</izz>      
+        </inertia>
+      <visual name="visual">
+        <geometry>
+          <mesh>
+            <uri>/mnt/c/Users/davip/terzo_anno/Robotics/workspaces/PROGETTO_ROBOTICA/ur_grippertest/src/support/legos/legos_description/222.dae</uri>
+          </mesh>
+        </geometry>
+      </visual>
+    </link>
+  </model>
+</sdf>
+
+

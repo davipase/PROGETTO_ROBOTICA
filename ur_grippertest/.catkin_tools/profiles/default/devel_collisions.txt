@@ -1,0 +1,2 @@
+/mnt/c/Users/davip/terzo_anno/Robotics/workspaces/ur_grippertest/devel/./cmake.lock 13512
+/mnt/c/Users/davip/terzo_anno/Robotics/workspaces/PROGETTO_ROBOTICA/ur_grippertest/devel/./cmake.lock 3557

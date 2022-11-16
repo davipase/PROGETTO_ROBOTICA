@@ -1,0 +1,2 @@
+universal_robot/universal_robot
+/mnt/c/Users/davip/terzo_anno/Robotics/workspaces/PROGETTO_ROBOTICA/ur_grippertest/devel/.private/universal_robot/cmake.lock /mnt/c/Users/davip/terzo_anno/Robotics/workspaces/PROGETTO_ROBOTICA/ur_grippertest/devel/./cmake.lock

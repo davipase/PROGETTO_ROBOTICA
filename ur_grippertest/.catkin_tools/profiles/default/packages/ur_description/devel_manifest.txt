@@ -1,0 +1,5 @@
+universal_robot/ur_description
+/mnt/c/Users/davip/terzo_anno/Robotics/workspaces/PROGETTO_ROBOTICA/ur_grippertest/devel/.private/ur_description/cmake.lock /mnt/c/Users/davip/terzo_anno/Robotics/workspaces/PROGETTO_ROBOTICA/ur_grippertest/devel/./cmake.lock
+/mnt/c/Users/davip/terzo_anno/Robotics/workspaces/PROGETTO_ROBOTICA/ur_grippertest/devel/.private/ur_description/lib/pkgconfig/ur_description.pc /mnt/c/Users/davip/terzo_anno/Robotics/workspaces/PROGETTO_ROBOTICA/ur_grippertest/devel/lib/pkgconfig/ur_description.pc
+/mnt/c/Users/davip/terzo_anno/Robotics/workspaces/PROGETTO_ROBOTICA/ur_grippertest/devel/.private/ur_description/share/ur_description/cmake/ur_descriptionConfig-version.cmake /mnt/c/Users/davip/terzo_anno/Robotics/workspaces/PROGETTO_ROBOTICA/ur_grippertest/devel/share/ur_description/cmake/ur_descriptionConfig-version.cmake
+/mnt/c/Users/davip/terzo_anno/Robotics/workspaces/PROGETTO_ROBOTICA/ur_grippertest/devel/.private/ur_description/share/ur_description/cmake/ur_descriptionConfig.cmake /mnt/c/Users/davip/terzo_anno/Robotics/workspaces/PROGETTO_ROBOTICA/ur_grippertest/devel/share/ur_description/cmake/ur_descriptionConfig.cmake
